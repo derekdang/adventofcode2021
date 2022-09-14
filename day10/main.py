@@ -2,36 +2,16 @@ with open("/home/derekdang/adventofcode2021/day10/input.txt", encoding='utf-8', 
     data = file.read().splitlines()
     first_illegal_chars = {')':0, ']':0, '}':0, '>':0}
     values = {')':3, ']':57, '}':1197, '>':25137}
+    complement_chars = {')':'(', ']':'[', '}':'{', '>':'<'}
     incomplete_lines = []
     for line in data:
         stack = []
         legal_line = True
         for char in line:
-            if char in first_illegal_chars:
+            if char in complement_chars:
                 last = stack[len(stack)-1]
-            if char == ')':
-                if last != '(':
-                    first_illegal_chars[char] = first_illegal_chars[char]+1
-                    legal_line = False
-                    break
-                else:
-                    stack.pop()
-            elif char == ']':
-                if last != '[':
-                    first_illegal_chars[char] = first_illegal_chars[char]+1
-                    legal_line = False
-                    break
-                else:
-                    stack.pop()
-            elif char == '}':
-                if last != '{':
-                    first_illegal_chars[char] = first_illegal_chars[char]+1
-                    legal_line = False
-                    break
-                else:
-                    stack.pop()
-            elif char == '>':
-                if last != '<':
+            if char in complement_chars:
+                if last != complement_chars[char]:
                     first_illegal_chars[char] = first_illegal_chars[char]+1
                     legal_line = False
                     break
